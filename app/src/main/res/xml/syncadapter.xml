@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sync-adapter xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accountType="com.randiw.synccontact"
+    android:allowParallelSyncs="false"
+    android:contentAuthority="com.randiw.synccontact.model.repository.provider.ContactProvider"
+    android:isAlwaysSyncable="false"
+    android:supportsUploading="false"
+    android:userVisible="true" />

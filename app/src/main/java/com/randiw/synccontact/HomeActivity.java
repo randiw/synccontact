@@ -1,12 +1,17 @@
 package com.randiw.synccontact;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
+
+import com.randiw.synccontact.model.AccountGeneral;
+import com.randiw.synccontact.service.ContactMonitorService;
 
 
 public class HomeActivity extends Activity {
+
+    public static final String TAG = HomeActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,23 +19,18 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart");
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        if (AccountGeneral.getActiveAccount() == null) {
+            String password = "randi123";
+            String username = "randi.waranugraha@gmail.com";
+            AccountGeneral.addAccount(username, password);
         }
-        return super.onOptionsItemSelected(item);
+
+        Intent contactMonitorIntent = new Intent(this, ContactMonitorService.class);
+        startService(contactMonitorIntent);
     }
 }
